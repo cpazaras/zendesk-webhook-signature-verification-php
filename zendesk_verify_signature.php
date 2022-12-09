@@ -46,7 +46,7 @@ function webhookEndpoint(){
 
 	//verify
 	if(!Zendesk::verifySignature($incoming_signature, $incoming_timestamp, $body, $webhook_secret)){
-		echo ('failed');
+		exit('verification failed!');
 	}//end if
 
 
