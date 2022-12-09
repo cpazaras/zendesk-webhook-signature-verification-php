@@ -1,4 +1,4 @@
-# Zendesk webhook signature verification in PHP
+# Zendesk webhook signature verification with PHP
 
 For Zendesk Support.
 
