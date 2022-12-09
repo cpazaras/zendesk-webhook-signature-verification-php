@@ -1,5 +1,9 @@
 # zendesk-webhook-signature-verification-php
-PHP script to verify Zendesk webhook signatures.
+
+For Zendesk Support.
+
+This is a PHP script to verify Zendesk webhook signatures from Zendesk Support.
+
 
 A couple of points:
 - Each webhook has its own secret - must be provided to the function manually.
@@ -10,7 +14,7 @@ A couple of points:
 3) or from the webhook request headers themselves - header "X-Zendesk-Webhook-Id" contains the webhook ID (not sure if it can be trusted though)
 
 
-*** Please do keep in mind that all of this was valid at the time of implementation and thus I cannot guarantee it will also be valid in the future in case Zendesk decides to change their approach. I do intend to keep it up to date though.
+*** Please do keep in mind that all of this was valid at the time of implementation and thus I cannot guarantee it will also be valid in the future or in case Zendesk decides to change their approach. I do intend to keep it up to date though.
 
 
 Hope this helps someone.
