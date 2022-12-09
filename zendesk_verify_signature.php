@@ -33,12 +33,12 @@ function verifySignature($incoming_signature, $incoming_timestamp, $incoming_bod
 function webhookEndpoint(){
 
 	//incoming signature & timestamp
-	$headers 			= getallheaders();
+	$headers 		= getallheaders();
 	$incoming_signature	= $headers['X-Zendesk-Webhook-Signature'];
 	$incoming_timestamp	= $headers['X-Zendesk-Webhook-Signature-Timestamp'];
 
 	//incoming body
-	$body				= file_get_contents("php://input");
+	$body			= file_get_contents("php://input");
 
 	//webhook secret
 	$webhook_secret		= 'yourWebhookSecret';
