@@ -8,8 +8,8 @@
  *
  * @param $incoming_signature	-- the signature received from Zendesk	---> getallheaders()['X-Zendesk-Webhook-Signature'];
  * @param $incoming_timestamp	-- the timestamp received from Zendesk	---> getallheaders()['X-Zendesk-Webhook-Signature-Timestamp'];
- * @param $incoming_body		-- the raw request body					---> file_get_contents("php://input");
- * @param $webhook_secret		-- the webhook secret key (each webhook has its own - different - key)
+ * @param $incoming_body	-- the raw request body			---> file_get_contents("php://input");
+ * @param $webhook_secret	-- the webhook secret key (each webhook has its own - different - key)
  *
  * @return bool
  */
