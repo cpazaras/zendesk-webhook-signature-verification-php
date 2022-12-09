@@ -6,6 +6,7 @@ This is a PHP script to verify Zendesk webhook signatures from Zendesk Support.
 
 
 A couple of points:
+- This solution was tested with the data in the request payload being "Form Encoded" - so no JSON - this doesn't mean it won't work for JSON data too, I just didn't test it.
 - Each webhook has its own secret - must be provided to the function manually.
 - Email addresses in the parameters must have the "@" symbol encoded as "%40" (is the case already by default for Zendesk - no need to do anything).
 - The secret for each webhook can be obtained in 3 ways:
