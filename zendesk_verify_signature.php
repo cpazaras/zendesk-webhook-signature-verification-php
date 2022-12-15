@@ -5,15 +5,24 @@
  *
  * At the time of implementation any email addresses in the parameters must have the "@" symbol encoded as "%40" otherwise the resulting hash will not be the same (is the case already by default for Zendesk).
  *
+ * Apart from the $webhook_secret all other parameters are OPTIONAL - their only purpose is to be able to provide custom data, and/or for the
+ * case where the function is not used in the script which directly receives the webhook request (and thus the headers might be different).
  *
+ *
+ * @param $webhook_secret	-- the webhook secret key (each webhook has its own - different - key)
  * @param $incoming_signature	-- the signature received from Zendesk	---> getallheaders()['X-Zendesk-Webhook-Signature'];
  * @param $incoming_timestamp	-- the timestamp received from Zendesk	---> getallheaders()['X-Zendesk-Webhook-Signature-Timestamp'];
  * @param $incoming_body	-- the raw request body			---> file_get_contents("php://input");
- * @param $webhook_secret	-- the webhook secret key (each webhook has its own - different - key)
  *
  * @return bool
  */
-function verifySignature($incoming_signature, $incoming_timestamp, $incoming_body, $webhook_secret){
+function verifySignature($webhook_secret, $incoming_signature = '', $incoming_timestamp = '', $incoming_body = ''){
+
+	//fetch any not supplied info
+	if($incoming_signature == '') $incoming_signature	= getallheaders()['X-Zendesk-Webhook-Signature'];//end if
+	if($incoming_timestamp == '') $incoming_timestamp	= getallheaders()['X-Zendesk-Webhook-Signature-Timestamp'];//end if
+	if($incoming_body == '')	  $incoming_body		= file_get_contents("php://input");//end if
+
 
 	//the data to be signed (i.e. hashed)
 	$to_hash	= $incoming_timestamp . $incoming_body;
@@ -28,7 +37,27 @@ function verifySignature($incoming_signature, $incoming_timestamp, $incoming_bod
 
 
 /**
- * Sample - Example webhook endpoint which will receive the request:
+ * Sample - Example webhook endpoint which receives the request:
+ */
+function webhookEndpoint(){
+
+	//webhook secret
+	$webhook_secret		= 'yourWebhookSecret';
+
+	//verify
+	if(!Zendesk::verifySignature($webhook_secret)){
+		exit('verification failed!');
+	}//end if
+
+
+	////// at this point we can trust that the request is coming from Zendesk
+
+
+}//end function
+
+
+/**
+ * Sample - Example with manually specified parameters:
  */
 function webhookEndpoint(){
 
@@ -45,7 +74,7 @@ function webhookEndpoint(){
 
 
 	//verify
-	if(!Zendesk::verifySignature($incoming_signature, $incoming_timestamp, $body, $webhook_secret)){
+	if(!Zendesk::verifySignature($webhook_secret, $incoming_signature, $incoming_timestamp, $body)){
 		exit('verification failed!');
 	}//end if
 
